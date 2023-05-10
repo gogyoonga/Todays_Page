@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'home_screen.dart';
+import 'my_screen.dart';
+import 'our_screen.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -19,7 +23,19 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentPageIndex = 0;
+  int _selectedIndex = 0;
+
+  static List<Widget> pages = <Widget>[
+    OurScreen(),
+    HomeScreen(),
+    MyScreen(),
+  ];
+
+  void _onItemTapped(int index){
+    setState((){
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,43 +43,30 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
-            currentPageIndex = index;
+            _selectedIndex = index;
           });
         },
-        selectedIndex: currentPageIndex,
+        selectedIndex: _selectedIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
+            icon: Icon(Icons.groups),
+            label: 'Our',
           ),
           NavigationDestination(
-            icon: Icon(Icons.commute),
-            label: 'Commute',
+            icon: Icon(Icons.home),
+            label: 'Main',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.bookmark),
-            icon: Icon(Icons.bookmark_border),
-            label: 'Saved',
+            icon: Icon(Icons.face),
+            label: 'My',
           ),
         ],
       ),
-      body: <Widget>[
-        Container(
-          color: Colors.red,
-          alignment: Alignment.center,
-          child: const Text('Page 1'),
-        ),
-        Container(
-          color: Colors.green,
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
-        ),
-        Container(
-          color: Colors.blue,
-          alignment: Alignment.center,
-          child: const Text('Page 3'),
-        ),
-      ][currentPageIndex],
+
+      floatingActionButton: FloatingActionButton( child: Icon(Icons.create) ,onPressed: (){  },),
+      body: pages[_selectedIndex],
+
+
     );
   }
 }
