@@ -63,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
 
-      floatingActionButton: FloatingActionButton( child: Icon(Icons.create) ,onPressed: (){  },),
+
       body: pages[_selectedIndex],
 
 

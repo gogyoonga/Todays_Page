@@ -5,7 +5,8 @@ class OurScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Column(children: [Container(
-      color: Colors.green,
+      color: Colors.green[100],
+      height: 100,
     ),
       Text('Our에는 다이어리가 떠요'),
       Container(
