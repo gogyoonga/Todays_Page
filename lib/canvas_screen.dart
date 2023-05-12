@@ -6,7 +6,6 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-
 void main() {
   runApp(MyApp());
   print('hello');
@@ -17,24 +16,24 @@ class PdfDocument {
   final List<pw.Widget> drawings = [];
 
   //그림을 그리는 부분입니다.
-   void addDrawing(pw.Widget drawing) {
-     drawings.add(drawing);
-   }
-   //PDF를 저장합니다.
-    Future<void> savePdf() async {
-     final pdf = pw.Document();
+  void addDrawing(pw.Widget drawing) {
+    drawings.add(drawing);
+  }
 
-     //그림들을 PDF에 추가합니다.
-      for (final drawing in drawings) {
-        pdf.addPage(pw.Page(build: (context) => drawing));
-      }
+  //PDF를 저장합니다.
+  Future<void> savePdf() async {
+    final pdf = pw.Document();
 
-      // PDF를 파일로 저장합니다.
-      final file = File('example.pdf');
-      await file.writeAsBytes(await pdf.save());
+    //그림들을 PDF에 추가합니다.
+    for (final drawing in drawings) {
+      pdf.addPage(pw.Page(build: (context) => drawing));
     }
-}
 
+    // PDF를 파일로 저장합니다.
+    final file = File('example.pdf');
+    await file.writeAsBytes(await pdf.save());
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -89,115 +88,124 @@ class DrawingPage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-
-    // 그림 관련 버튼들입니다.
-    ButtonBar(
-    alignment: MainAxisAlignment.center,
-    children: [
-    ElevatedButton(
-    onPressed: () {
-    showDialog(
-    context: context,
-    builder: (context) {
-    return AlertDialog(
-    title: Text('Select Color'),
-    content: SingleChildScrollView(
-    child: ColorPicker(
-    pickerColor: Provider.of<DrawingState>(context).selectedColor,
-    onColorChanged: (color) {
-    Provider.of<DrawingState>(context, listen: false).selectColor(color);
-    },
-    showLabel: true,
-    pickerAreaHeightPercent: 0.8,
-    ),
-    ),
-    );
-    },
-    );
-    },
-    child: Text('C'),
-    ),
-    ElevatedButton(
-    onPressed: () {
-    showDialog(
-    context: context,
-    builder: (context) {
-    return AlertDialog(
-    title: Text('Select Stroke Width'),
-    content: SingleChildScrollView(
-    child: Slider(
-    value: Provider.of<DrawingState>(context).strokeWidth,
-    min: 1.0,
-    max: 10.0,
-    onChanged: (width) {
-    Provider. of<DrawingState>(context, listen: false).setStrokeWidth(width);
-    },
-    ),
-    ),
-    );
-    },
-    );
-    },
-      child: Text('Width'),
-    ),
-      Switch(
-        value: context.watch<DrawingState>().isEraserMode,
-        onChanged: (value) {
-          context.read<DrawingState>().setEraserMode(value);
-        },
-      ),
-      ElevatedButton(
-        onPressed: () {
-          Provider.of<DrawingState>(context, listen: false).setEraserMode(true);
-        },
-        child: Text('Eraser'),
-      ),
-      ElevatedButton(
-        onPressed: () {
-          Provider.of<DrawingState>(context, listen: false).setEraserMode(false);
-        },
-        child: Text('Pen'),
-      ),
-    ],
-    ),
-              // 그림을 그리는 부분입니다.
-              Expanded(
-                child: Consumer<DrawingState>(
-                  builder: (context, state, child) {
-                    return GestureDetector(
-                      onPanStart: (details) {
-                        // TODO: 그리기 시작 로직을 구현합니다.
+          children: [
+            // 그림 관련 버튼들입니다.
+            ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Select Color'),
+                          content: SingleChildScrollView(
+                            child: ColorPicker(
+                              pickerColor: Provider.of<DrawingState>(context)
+                                  .selectedColor,
+                              onColorChanged: (color) {
+                                Provider.of<DrawingState>(context,
+                                        listen: false)
+                                    .selectColor(color);
+                              },
+                              showLabel: true,
+                              pickerAreaHeightPercent: 0.8,
+                            ),
+                          ),
+                        );
                       },
-                      onPanUpdate: (details) {
-                        // TODO: 그리기 중 로직을 구현합니다.
-                      },
-                      onPanEnd: (details) {
-                        // TODO: 그리기 완료 로직을 구현합니다.
-                        state.finishDrawing();
-                      },
-                      child: CustomPaint(
-                        painter: MyPainter(
-                          color: state.selectedColor,
-                          strokeWidth: state.strokeWidth,
-                          isEraserMode: state.isEraserMode,
-                        ),
-                      ),
                     );
                   },
+                  child: Text('C'),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Select Stroke Width'),
+                          content: SingleChildScrollView(
+                            child: Slider(
+                              value: Provider.of<DrawingState>(context)
+                                  .strokeWidth,
+                              min: 1.0,
+                              max: 10.0,
+                              onChanged: (width) {
+                                Provider.of<DrawingState>(context,
+                                        listen: false)
+                                    .setStrokeWidth(width);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: Text('Width'),
+                ),
+                Switch(
+                  value: context.watch<DrawingState>().isEraserMode,
+                  onChanged: (value) {
+                    context.read<DrawingState>().setEraserMode(value);
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Provider.of<DrawingState>(context, listen: false)
+                        .setEraserMode(true);
+                  },
+                  child: Text('Eraser'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Provider.of<DrawingState>(context, listen: false)
+                        .setEraserMode(false);
+                  },
+                  child: Text('Pen'),
+                ),
+              ],
+            ),
+            // 그림을 그리는 부분입니다.
+            Expanded(
+              child: Consumer<DrawingState>(
+                builder: (context, state, child) {
+                  return GestureDetector(
+                    onPanStart: (details) {
+                      // TODO: 그리기 시작 로직을 구현합니다.
+                    },
+                    onPanUpdate: (details) {
+                      // TODO: 그리기 중 로직을 구현합니다.
+                    },
+                    onPanEnd: (details) {
+                      // TODO: 그리기 완료 로직을 구현합니다.
+                      state.finishDrawing();
+                    },
+                    child: CustomPaint(
+                      painter: MyPainter(
+                        color: state.selectedColor,
+                        strokeWidth: state.strokeWidth,
+                        isEraserMode: state.isEraserMode,
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
+            ),
+          ],
         ),
       ),
     );
-
   }
 }
 
 // 실제 그리기를 담당하는 클래스입니다.
 class MyPainter extends CustomPainter {
-  MyPainter({required this.color, required this.strokeWidth, required this.isEraserMode});
+  MyPainter(
+      {required this.color,
+      required this.strokeWidth,
+      required this.isEraserMode});
 
 // 필요한 속성값들을 정의합니다.
   final Color color;
@@ -216,4 +224,3 @@ class MyPainter extends CustomPainter {
     return true;
   }
 }
-
