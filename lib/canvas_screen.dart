@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 
 void main() {
   runApp(MyApp());
+  print('hello');
 }
 
 class MyApp extends StatelessWidget {
