@@ -164,7 +164,17 @@ class DrawingPage extends StatelessWidget {
                         .setEraserMode(false);
                   },
                   child: Text('Pen'),
-                ),
+                ),  ElevatedButton(
+                  onPressed: () async {
+                    final pdfController = PdfController(
+                      document: PdfDocument.openData(Provider.of<DrawingState>(context, listen: false).generatePdf()),
+                    );
+                    final file = await savePdfFile(pdfController);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('PDF file saved to ${file.path}'),
+                    ));
+                  },
+                  child: Text('Save'),),
               ],
             ),
             // 그림을 그리는 부분입니다.
