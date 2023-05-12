@@ -1,13 +1,40 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 
 void main() {
   runApp(MyApp());
   print('hello');
 }
+
+class PdfDocument {
+  //필요한 상태값을 정의합니다.
+  final List<pw.Widget> drawings = [];
+
+  //그림을 그리는 부분입니다.
+   void addDrawing(pw.Widget drawing) {
+     drawings.add(drawing);
+   }
+   //PDF를 저장합니다.
+    Future<void> savePdf() async {
+     final pdf = pw.Document();
+
+     //그림들을 PDF에 추가합니다.
+      for (final drawing in drawings) {
+        pdf.addPage(pw.Page(build: (context) => drawing));
+      }
+
+      // PDF를 파일로 저장합니다.
+      final file = File('example.pdf');
+      await file.writeAsBytes(await pdf.save());
+    }
+}
+
 
 class MyApp extends StatelessWidget {
   @override
