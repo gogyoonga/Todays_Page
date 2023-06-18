@@ -49,16 +49,16 @@ class _MainScreenState extends State<MainScreen> {
         selectedIndex: _selectedIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.groups),
-            label: 'Our',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           NavigationDestination(
             icon: Icon(Icons.home),
-            label: 'Main',
+            label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.face),
-            label: 'My',
+            icon: Icon(Icons.book),
+            label: 'Diary',
           ),
         ],
       ),
