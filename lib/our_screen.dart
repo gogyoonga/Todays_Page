@@ -1,49 +1,53 @@
 import 'package:flutter/material.dart';
 
-class OurScreen extends StatelessWidget{
+class OurScreen extends StatefulWidget {
+  @override
+  _OurScreenState createState() => _OurScreenState();
+}
+
+class _OurScreenState extends State<OurScreen> {
+  String searchText = '';
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(children: [Container(
-      color: Colors.green[100],
-      height: 130,
-      child: Row(children: [Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-      ),
-        Container(
-        width: 200,
-          height: 100,
-          color: Colors.white,
-          child: Text('꼬모냥냥\n 발자국: 500 \n클로버: 30'),
-      )],
-      ),
-    ),
-      Text('다이어리가 떠요'),
-      Container(
-        width: 320,
-        height: 460,
-        decoration: BoxDecoration(
-          color: Colors.amber[100],
-          borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(50),
-          topLeft: Radius.circular(10),
-          bottomRight: Radius.circular(50),
-            bottomLeft: Radius.circular(10)
+    return ListView(
+      padding: EdgeInsets.all(16.0),
+      children: [
+        TextField(
+          decoration: InputDecoration(
+            hintText: '검색어를 입력하세요', // 힌트 텍스트
+            prefixIcon: Icon(Icons.search), // 검색 아이콘
+            border: OutlineInputBorder(), // 테두리 스타일
           ),
-          image: const DecorationImage(
-            image: AssetImage(
-              ''
-            )
-          )
-        ),
+          onChanged: (value) {
+            setState(() {
+              searchText = value;
+            });
 
-      ),
-    ],
+            // 검색어 변경에 따른 로직 수행
+            // 예: 검색 결과 업데이트, 필터링 등
+          },
+        ),
+        SizedBox(height: 16.0), // 추가적인 공간
+
+        // 다른 위젯들 추가 가능
+        Container(
+          color: Colors.amber[100],
+          height: 100,
+
+
+    ),
+
+        Text('여기에는 무언가를'),
+        Text('위젯 2'),
+        Text('위젯 3'),
+        IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border)),
+        IconButton(onPressed: (){}, icon: Icon(Icons.local_fire_department_outlined)),
+        Image.asset('images/clover.png', height: 20,),
+
+
+
+      ],
     );
   }
-  }
+}
